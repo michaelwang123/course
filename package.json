@@ -13,7 +13,7 @@
     "validate-build": "tsx scripts/validate-build.ts"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "dependencies": {
     "@docusaurus/core": "^3.4.0",
