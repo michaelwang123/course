@@ -4,25 +4,37 @@
   "private": true,
   "description": "高质量中文技术教程站点",
   "scripts": {
-    "docs:dev": "vitepress dev",
-    "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview",
+    "build": "docusaurus build",
+    "dev": "docusaurus start",
+    "start": "docusaurus start",
+    "serve": "docusaurus serve",
+    "clear": "docusaurus clear",
     "test": "vitest run",
-    "test:build": "npm run docs:build && node scripts/validate-build.js"
+    "validate-build": "tsx scripts/validate-build.ts"
   },
   "engines": {
     "node": ">=18"
   },
   "dependencies": {
-    "autoprefixer": "^10.5.0",
-    "postcss": "^8.5.15",
-    "tailwindcss": "^3.4.19",
-    "vitepress": "^1.6.4"
+    "@docusaurus/core": "^3.4.0",
+    "@docusaurus/preset-classic": "^3.4.0",
+    "@easyops-cn/docusaurus-search-local": "^0.40.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.7",
-    "@vue/test-utils": "^2.4.11",
-    "happy-dom": "^20.10.2",
-    "vitest": "^4.1.8"
+    "@docusaurus/module-type-aliases": "^3.4.0",
+    "@fast-check/vitest": "^0.4.1",
+    "@testing-library/jest-dom": "^6.4.0",
+    "@testing-library/react": "^16.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "autoprefixer": "^10.5.0",
+    "fast-check": "^3.19.0",
+    "happy-dom": "^20.10.0",
+    "jsdom": "^24.1.0",
+    "postcss": "^8.5.0",
+    "tailwindcss": "^3.4.19",
+    "tsx": "^4.22.4",
+    "vitest": "^4.1.0"
   }
 }

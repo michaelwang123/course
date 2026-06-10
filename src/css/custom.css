@@ -1,0 +1,297 @@
+/* === 自定义设计变量 === */
+:root,
+[data-theme='dark'] {
+  --color-bg: #030712;
+  --color-bg-soft: #111827;
+  --color-bg-mute: #1f2937;
+  --color-brand: #00ffaa;
+  --color-brand-dark: #00cc88;
+  --color-text: #ffffff;
+  --color-text-muted: #9ca3af;
+}
+
+/* === 映射到 Docusaurus Infima 变量 === */
+[data-theme='dark'] {
+  --ifm-background-color: var(--color-bg);
+  --ifm-background-surface-color: var(--color-bg-soft);
+  --ifm-color-primary: var(--color-brand);
+  --ifm-color-primary-dark: var(--color-brand-dark);
+  --ifm-color-primary-light: #33ffbb;
+  --ifm-color-primary-lightest: #66ffcc;
+  --ifm-color-primary-darkest: #009966;
+  --ifm-color-primary-darker: #00b377;
+  --ifm-navbar-background-color: rgba(3, 7, 18, 0.8);
+  --ifm-font-color-base: var(--color-text);
+}
+
+/* === 动画关键帧 === */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes dash-flow {
+  from { stroke-dashoffset: 28; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(0, 255, 170, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(0, 255, 170, 0.7);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes dot-move {
+  0% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: translateX(var(--dot-distance));
+  }
+}
+
+/* === 导航栏样式 === */
+.navbar {
+  backdrop-filter: blur(12px) saturate(180%);
+  background: rgba(3, 7, 18, 0.8) !important;
+  border-bottom: 1px solid rgba(0, 255, 170, 0.1);
+}
+
+/* === 代码块微光效果 === */
+.prism-code,
+[class*="codeBlock"] {
+  position: relative;
+  overflow: hidden;
+}
+
+[class*="codeBlock"]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(0,255,170,0.03) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* === 无障碍：减少动画 === */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* === 首页样式 === */
+.home-page {
+  padding: 0;
+}
+
+/* Hero Section */
+.home-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 1.5rem;
+  min-height: 40vh;
+}
+
+.home-hero__title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+}
+
+.home-hero__subtitle {
+  font-size: 1.25rem;
+  color: var(--color-text-muted);
+  margin-bottom: 2rem;
+}
+
+.home-hero__cta {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background: var(--color-brand);
+  color: #030712;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.home-hero__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 255, 170, 0.4);
+  color: #030712;
+  text-decoration: none;
+}
+
+/* Flow Visualization Section */
+.home-flow {
+  padding: 2rem 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.home-flow__container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.home-flow__stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.25rem;
+  border: 1px solid var(--color-brand);
+  border-radius: 9999px;
+  background: var(--color-bg-soft);
+  box-shadow: 0 0 8px rgba(0, 255, 170, 0.2);
+}
+
+.home-flow__label {
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.home-flow__connector {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Card Grid Section */
+.home-cards {
+  padding: 3rem 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.home-cards__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+/* AnimatedCard Base Styles */
+.animated-card {
+  display: block;
+  padding: 1.5rem;
+  background: var(--color-bg-soft);
+  border: 1px solid var(--color-bg-mute);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--color-text);
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.animated-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-brand);
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.animated-card__icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.animated-card__title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: var(--color-text);
+}
+
+.animated-card__description {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Responsive: single column on mobile */
+@media (max-width: 767px) {
+  .home-cards__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero__title {
+    font-size: 2rem;
+  }
+
+  .home-flow__container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .home-flow__connector {
+    transform: rotate(90deg);
+  }
+
+  .arch-diagram {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+}
+
+/* === ArchDiagram 连接列表 === */
+.arch-diagram__connections-list {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  justify-content: center;
+  padding: 0.5rem;
+  font-size: 0.7rem;
+}
