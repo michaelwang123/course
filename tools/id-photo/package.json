@@ -1,0 +1,42 @@
+{
+  "name": "id-photo-tool",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.20",
+    "jspdf": "^2.5.2",
+    "postcss": "^8.4.47",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-image-crop": "^11.0.7",
+    "react-router-dom": "^6.28.0",
+    "tailwindcss": "^3.4.14"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@testing-library/react": "^16.0.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "fast-check": "^3.22.0",
+    "happy-dom": "^15.7.4",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "vitest": "^2.1.4"
+  },
+  "browserslist": [
+    "last 2 Chrome versions",
+    "last 2 Firefox versions",
+    "last 2 Safari versions",
+    "last 2 Edge versions"
+  ]
+}

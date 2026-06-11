@@ -19,8 +19,11 @@
     "@docusaurus/core": "^3.4.0",
     "@docusaurus/preset-classic": "^3.4.0",
     "@easyops-cn/docusaurus-search-local": "^0.40.1",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "three": "^0.169.0"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.4.0",

@@ -1,0 +1,98 @@
+---
+sidebar_label: '卡车 3D 模型'
+title: '卡车 3D 模型展示'
+---
+
+import BrowserOnly from '@docusaurus/BrowserOnly';
+
+# 卡车 3D 模型展示
+
+使用 React Three Fiber 构建的交互式卡车 3D 模型，支持在模型上标注车辆指标数据。
+
+**操作方式：**
+- 🖱️ 左键拖拽旋转
+- 🔍 滚轮缩放
+- ✋ 右键拖拽平移
+
+## 默认指标展示
+
+<BrowserOnly fallback={<div>加载 3D 模型中...</div>}>
+  {() => {
+    const Truck3D = require('@site/src/components/Truck3D').default;
+    return <Truck3D />;
+  }}
+</BrowserOnly>
+
+## 自定义指标数据
+
+<BrowserOnly fallback={<div>加载 3D 模型中...</div>}>
+  {() => {
+    const Truck3D = require('@site/src/components/Truck3D').default;
+    return (
+      <Truck3D
+        metrics={{
+          engine: '国六 柴油 400HP',
+          mileage: '56,000 km',
+          fuelLevel: '45%',
+          tireStatus: '需更换',
+          loadWeight: '18 吨 / 20 吨',
+          speed: '65 km/h',
+        }}
+        height={450}
+      />
+    );
+  }}
+</BrowserOnly>
+
+## 仅模型（不显示标注）
+
+<BrowserOnly fallback={<div>加载 3D 模型中...</div>}>
+  {() => {
+    const Truck3D = require('@site/src/components/Truck3D').default;
+    return <Truck3D showAnnotations={false} height={400} />;
+  }}
+</BrowserOnly>
+
+## 使用方式
+
+```tsx
+import Truck3D from '@site/src/components/Truck3D';
+
+// 基本用法
+<Truck3D />
+
+// 自定义指标
+<Truck3D
+  metrics={{
+    engine: '柴油 350 马力',
+    mileage: '128,450 km',
+    fuelLevel: '72%',
+    tireStatus: '良好',
+    loadWeight: '12.5 吨 / 20 吨',
+    speed: '0 km/h',
+  }}
+/>
+
+// 隐藏标注
+<Truck3D showAnnotations={false} />
+```
+
+## Props API
+
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `metrics` | `TruckMetrics` | 内置默认值 | 车辆指标数据 |
+| `showAnnotations` | `boolean` | `true` | 是否显示指标标注 |
+| `width` | `string \| number` | `'100%'` | 容器宽度 |
+| `height` | `string \| number` | `500` | 容器高度 |
+
+## TruckMetrics 数据结构
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `engine` | `string` | 发动机信息 |
+| `mileage` | `string` | 行驶里程 |
+| `fuelLevel` | `string` | 油量 |
+| `tireStatus` | `string` | 轮胎状态 |
+| `loadWeight` | `string` | 载重 |
+| `speed` | `string` | 当前速度 |
