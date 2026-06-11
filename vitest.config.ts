@@ -15,10 +15,10 @@ export default defineConfig({
   test: {
     environment: 'happy-dom',
     include: ['**/*.test.{ts,tsx}'],
-    exclude: ['node_modules', 'build', '.docusaurus', '.vitepress'],
+    exclude: ['node_modules', 'build', '.docusaurus', '.vitepress', 'tools/**'],
     setupFiles: ['./vitest.setup.ts'],
     coverage: {
-      exclude: ['node_modules', 'build', '.docusaurus', '.vitepress'],
+      exclude: ['node_modules', 'build', '.docusaurus', '.vitepress', 'tools/**'],
     },
   },
 });
