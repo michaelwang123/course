@@ -4,3 +4,4 @@ build/
 .vitepress/dist/
 .vitepress/cache/
 *.local
+.kiro
