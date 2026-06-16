@@ -2,8 +2,8 @@ import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: '技术教程站',
-  tagline: '高质量中文技术教程',
+  title: '高质量人生',
+  tagline: '技术成长 × 人生修炼',
   url: 'https://michaelwang123.github.io',
   baseUrl: '/course/',
 
@@ -58,10 +58,31 @@ const config: Config = {
 
   themeConfig: {
     navbar: {
-      title: '技术教程站',
+      title: '高质量人生',
       items: [
         { to: '/', label: '首页', position: 'left' },
-        { to: '/ragflow/', label: 'RAGFlow', position: 'left' },
+        {
+          type: 'dropdown',
+          label: '人生成长',
+          position: 'left',
+          items: [
+            { to: '/life-wish/', label: '🎯 人生愿望' },
+            { to: '/money-wisdom/', label: '💰 财务认知' },
+            { to: '/mental-health/', label: '🧠 心理健康' },
+            { to: '/relationship/', label: '💑 关系与社交' },
+            { to: '/habits/', label: '✅ 好习惯养成' },
+            { to: '/book-read/', label: '📚 智慧书籍' },
+            { to: '/basketball-skill/', label: '🏀 篮球训练' },
+          ],
+        },
+        {
+          type: 'dropdown',
+          label: '技术学习',
+          position: 'left',
+          items: [
+            { to: '/ragflow/', label: 'RAGFlow 教程' },
+          ],
+        },
       ],
     },
     colorMode: {
