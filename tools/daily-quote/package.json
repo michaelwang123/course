@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "prebuild": "tsx scripts/parse-quotes.ts",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc -p tsconfig.build.json --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest --run"
   },
