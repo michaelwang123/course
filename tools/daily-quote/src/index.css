@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-warm-bg text-warm-text;
+    font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+    word-break: break-word;
+    min-height: 100vh;
+  }
+
+  /*
+   * Global focus-visible safety net:
+   * Ensures all interactive elements have a visible focus ring.
+   */
+  :focus-visible {
+    outline: 2px solid #8B7355;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Reset for elements that already define their own focus-visible styles via Tailwind */
+  [class*='focus-visible:ring']:focus-visible {
+    outline: none;
+  }
+
+  /* 金句展示区域留白与响应式布局 */
+  .quote-section {
+    @apply py-10 px-6;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  /* 移动端 (≤768px): 展示区域宽度 90%~100%，金句字号不小于 20px */
+  @media (max-width: 768px) {
+    .quote-section {
+      width: 90%;
+      max-width: 100%;
+      @apply px-4;
+    }
+
+    .quote-content {
+      font-size: 20px;
+    }
+  }
+
+  /* 桌面端 (>768px) */
+  @media (min-width: 769px) {
+    .quote-section {
+      width: 80%;
+    }
+
+    .quote-content {
+      font-size: 28px;
+    }
+  }
+}
