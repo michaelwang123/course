@@ -253,6 +253,168 @@ const sidebars: SidebarsConfig = {
   ],
 
   // ========== 技术学习板块 ==========
+  middlewareSidebar: [
+    {
+      type: 'doc',
+      id: 'middleware/index',
+      label: '中间件与工具库概览',
+    },
+    {
+      type: 'category',
+      label: 'Java 工具库',
+      collapsed: true,
+      items: [
+        {
+          type: 'category',
+          label: '核心工具库',
+          items: [
+            { type: 'doc', id: 'middleware/java/guava', label: 'Guava' },
+            { type: 'doc', id: 'middleware/java/apache-commons', label: 'Apache Commons' },
+            { type: 'doc', id: 'middleware/java/hutool', label: 'Hutool' },
+            { type: 'doc', id: 'middleware/java/lombok', label: 'Lombok' },
+          ],
+        },
+        {
+          type: 'category',
+          label: 'JSON/序列化库',
+          items: [
+            { type: 'doc', id: 'middleware/java/jackson', label: 'Jackson' },
+            { type: 'doc', id: 'middleware/java/fastjson2', label: 'Fastjson2' },
+            { type: 'doc', id: 'middleware/java/gson', label: 'Gson' },
+          ],
+        },
+        {
+          type: 'category',
+          label: '网络与 HTTP 库',
+          items: [
+            { type: 'doc', id: 'middleware/java/okhttp', label: 'OkHttp' },
+            { type: 'doc', id: 'middleware/java/apache-httpclient', label: 'Apache HttpClient' },
+            { type: 'doc', id: 'middleware/java/retrofit', label: 'Retrofit' },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Go 工具包',
+      collapsed: true,
+      items: [
+        {
+          type: 'category',
+          label: '标准库扩展',
+          items: [
+            { type: 'doc', id: 'middleware/go/cobra', label: 'cobra' },
+            { type: 'doc', id: 'middleware/go/viper', label: 'viper' },
+            { type: 'doc', id: 'middleware/go/zap', label: 'zap' },
+            { type: 'doc', id: 'middleware/go/gin-echo', label: 'gin/echo' },
+          ],
+        },
+        {
+          type: 'category',
+          label: '数据处理',
+          items: [
+            { type: 'doc', id: 'middleware/go/gorm', label: 'gorm' },
+            { type: 'doc', id: 'middleware/go/samber-lo', label: 'samber/lo' },
+            { type: 'doc', id: 'middleware/go/gjson-sjson', label: 'gjson/sjson' },
+            { type: 'doc', id: 'middleware/go/go-redis', label: 'go-redis' },
+          ],
+        },
+        {
+          type: 'category',
+          label: '工程化工具',
+          items: [
+            { type: 'doc', id: 'middleware/go/wire', label: 'wire' },
+            { type: 'doc', id: 'middleware/go/testify', label: 'testify' },
+            { type: 'doc', id: 'middleware/go/golangci-lint', label: 'golangci-lint' },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'category',
+      label: '大数据工具',
+      collapsed: true,
+      items: [
+        {
+          type: 'category',
+          label: '计算框架',
+          items: [
+            { type: 'doc', id: 'middleware/bigdata/spark', label: 'Apache Spark' },
+            { type: 'doc', id: 'middleware/bigdata/flink', label: 'Apache Flink' },
+          ],
+        },
+        {
+          type: 'category',
+          label: '工具库',
+          items: [
+            { type: 'doc', id: 'middleware/bigdata/calcite', label: 'Apache Calcite' },
+            { type: 'doc', id: 'middleware/bigdata/arrow', label: 'Apache Arrow' },
+            { type: 'doc', id: 'middleware/bigdata/roaring-bitmap', label: 'RoaringBitmap' },
+          ],
+        },
+        {
+          type: 'category',
+          label: '数据序列化',
+          items: [
+            { type: 'doc', id: 'middleware/bigdata/avro-parquet', label: 'Avro/Parquet' },
+            { type: 'doc', id: 'middleware/bigdata/protobuf', label: 'Protocol Buffers' },
+          ],
+        },
+        {
+          type: 'doc',
+          id: 'middleware/bigdata/ai-agent-landscape',
+          label: 'AI Agent 技术地图',
+        },
+      ],
+    },
+    {
+      type: 'category',
+      label: '中间件',
+      collapsed: true,
+      items: [
+        {
+          type: 'category',
+          label: '缓存',
+          items: [
+            { type: 'doc', id: 'middleware/middleware/redis', label: 'Redis' },
+          ],
+        },
+        {
+          type: 'category',
+          label: '消息队列',
+          items: [
+            { type: 'doc', id: 'middleware/middleware/kafka', label: 'Apache Kafka' },
+            { type: 'doc', id: 'middleware/middleware/rabbitmq', label: 'RabbitMQ' },
+            { type: 'doc', id: 'middleware/middleware/rocketmq', label: 'RocketMQ' },
+          ],
+        },
+        {
+          type: 'category',
+          label: '搜索与存储',
+          items: [
+            { type: 'doc', id: 'middleware/middleware/elasticsearch', label: 'Elasticsearch' },
+            { type: 'doc', id: 'middleware/middleware/minio', label: 'MinIO' },
+          ],
+        },
+        {
+          type: 'category',
+          label: '服务治理',
+          items: [
+            { type: 'doc', id: 'middleware/middleware/nacos', label: 'Nacos' },
+            { type: 'doc', id: 'middleware/middleware/sentinel', label: 'Sentinel' },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Kubernetes',
+      collapsed: true,
+      items: [
+        { type: 'doc', id: 'middleware/k8s/index', label: 'K8s 知识体系' },
+      ],
+    },
+  ],
   ragflowSidebar: [
     {
       type: 'doc',

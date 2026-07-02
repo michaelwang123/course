@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-size: 14px;
+    scroll-behavior: smooth;
+  }
+
+  @media (min-width: 768px) {
+    html {
+      font-size: 16px;
+    }
+  }
+
+  body {
+    @apply font-sans text-gray-800 antialiased;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* Prevent horizontal overflow on the entire page */
+  #root {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+}
+
+@layer components {
+  /* Warm gradient background utility */
+  .bg-warm-page {
+    background: linear-gradient(135deg, #FFFBEB 0%, #FFF7ED 50%, #FEF3C7 100%);
+  }
+
+  /* Subtle warm gradient for cards/panels */
+  .bg-warm-subtle {
+    background: linear-gradient(180deg, #FFFBF5 0%, #FFF8EE 100%);
+  }
+}
+
+/* Reduced motion: disable all non-essential animations and transitions */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

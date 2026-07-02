@@ -81,6 +81,7 @@ const config: Config = {
           position: 'left',
           items: [
             { to: '/ragflow/', label: 'RAGFlow 教程' },
+            { to: '/middleware/', label: '中间件与工具库' },
           ],
         },
       ],
