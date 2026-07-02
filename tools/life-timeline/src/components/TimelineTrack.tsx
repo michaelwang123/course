@@ -1,5 +1,5 @@
 // src/components/TimelineTrack.tsx
-// 水平轨道：集成拖拽/缩放/虚拟渲染，连续线条/路径连接相邻标记点
+// 水平轨道：拖拽滚动 + 动态流动线 + 年份刻度内嵌
 
 import { useRef, useCallback, useMemo } from 'react';
 import type { EventNode } from '@/types/event';
@@ -27,24 +27,30 @@ interface TimelineTrackProps {
   onEventHover: (event: EventNode, entering: boolean, position?: { x: number; y: number }) => void;
 }
 
+/** Left/right padding (px) so edge events aren't clipped */
+const TRACK_PADDING = 60;
+
 export function TimelineTrack({
   visibleNodes,
+  scaleMarks,
   isDragging,
   dragHandlers,
+  totalWidth,
+  offset,
   focusedIndex,
   onEventClick,
   onEventHover,
 }: TimelineTrackProps) {
   const trackRef = useRef<HTMLDivElement>(null);
 
-  // Handle hover with position for tooltip
   const handleMarkerHover = useCallback(
     (event: EventNode, entering: boolean) => {
       if (entering && trackRef.current) {
         const node = visibleNodes.find((n) => n.event.id === event.id);
         if (node) {
           const trackRect = trackRef.current.getBoundingClientRect();
-          const x = node.position + trackRect.left;
+          // node.position is global, subtract offset to get viewport-relative for tooltip
+          const x = node.position - offset + trackRect.left;
           const y = trackRect.top + trackRect.height / 2 - 22;
           onEventHover(event, true, { x, y });
         }
@@ -52,16 +58,15 @@ export function TimelineTrack({
         onEventHover(event, false);
       }
     },
-    [visibleNodes, onEventHover]
+    [visibleNodes, offset, onEventHover]
   );
 
-  // Memoize sorted nodes and connecting path to avoid recomputation on every render
   const { sortedNodes, connectingPath } = useMemo(() => {
     const sorted = [...visibleNodes].sort((a, b) => a.position - b.position);
     const path = sorted.length >= 2
       ? sorted
           .map((node, index) => {
-            const x = node.position;
+            const x = node.position + TRACK_PADDING;
             const y = 0;
             if (index === 0) return `M ${x} ${y}`;
             return `L ${x} ${y}`;
@@ -70,6 +75,8 @@ export function TimelineTrack({
       : '';
     return { sortedNodes: sorted, connectingPath: path };
   }, [visibleNodes]);
+
+  const innerWidth = totalWidth + TRACK_PADDING * 2;
 
   return (
     <div
@@ -81,43 +88,86 @@ export function TimelineTrack({
       style={{ willChange: isDragging ? 'transform' : 'auto' }}
       {...dragHandlers}
     >
-      {/* Inner container — markers use viewport-relative positions (offset already subtracted) */}
+      {/* Scrolling inner container */}
       <div
-        className="relative h-full w-full"
+        className="relative h-full"
+        style={{
+          width: `${innerWidth}px`,
+          transform: `translateX(${-offset}px)`,
+        }}
       >
-        {/* Connecting line/path between adjacent markers */}
+        {/* Animated flowing dash line */}
+        <svg
+          className="absolute top-1/2 left-0 w-full pointer-events-none -translate-y-1/2"
+          style={{ height: '4px', overflow: 'visible' }}
+          aria-hidden="true"
+        >
+          <line
+            x1={TRACK_PADDING} y1="2" x2={innerWidth - TRACK_PADDING} y2="2"
+            stroke="rgba(52, 211, 153, 0.12)"
+            strokeWidth="1.5"
+            strokeDasharray="6 4"
+            className="animate-dash-flow"
+          />
+        </svg>
+
+        {/* Solid glow center line */}
+        <div
+          className="absolute top-1/2 -translate-y-1/2"
+          style={{
+            left: `${TRACK_PADDING}px`,
+            right: `${TRACK_PADDING}px`,
+            height: '1px',
+            background: 'linear-gradient(90deg, transparent, rgba(52,211,153,0.35) 10%, rgba(52,211,153,0.35) 90%, transparent)',
+            boxShadow: '0 0 6px rgba(52,211,153,0.2)',
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Connecting path between events */}
         {sortedNodes.length >= 2 && (
           <svg
-            className="absolute top-1/2 left-0 w-full pointer-events-none"
-            style={{
-              height: '2px',
-              transform: 'translateY(-50%)',
-              overflow: 'visible',
-            }}
+            className="absolute top-1/2 left-0 w-full pointer-events-none -translate-y-1/2"
+            style={{ height: '4px', overflow: 'visible' }}
             aria-hidden="true"
           >
             <path
               d={connectingPath}
               fill="none"
-              stroke="currentColor"
+              stroke="rgba(52, 211, 153, 0.5)"
               strokeWidth="2"
-              className="text-emerald-700/50"
+              strokeLinecap="round"
             />
           </svg>
         )}
 
-        {/* Horizontal center line spanning full track width */}
-        <div
-          className="absolute top-1/2 left-0 w-full h-[2px] bg-gray-700 -translate-y-1/2"
-          aria-hidden="true"
-        />
+        {/* Year scale marks (integrated into the track) */}
+        {scaleMarks.map((mark, index) => {
+          const x = mark.position + TRACK_PADDING + offset; // scaleMarks are viewport-relative, convert to global
+          return (
+            <div
+              key={`scale-${mark.label}-${index}`}
+              className="absolute bottom-2 flex flex-col items-center pointer-events-none"
+              style={{ left: `${x}px`, transform: 'translateX(-50%)' }}
+            >
+              <div className={mark.type === 'major' ? 'w-px h-5 bg-emerald-600/60' : 'w-px h-3 bg-gray-700/60'} />
+              <span className={
+                mark.type === 'major'
+                  ? 'text-[11px] font-semibold text-emerald-400/80 mt-0.5 whitespace-nowrap'
+                  : 'text-[9px] text-gray-600 mt-0.5 whitespace-nowrap'
+              }>
+                {mark.label}
+              </span>
+            </div>
+          );
+        })}
 
-        {/* Event markers */}
+        {/* Event markers (global positions + padding) */}
         {visibleNodes.map((node, index) => (
           <EventMarker
             key={node.event.id}
             event={node.event}
-            position={node.position}
+            position={node.position + TRACK_PADDING}
             isStacked={node.isStacked}
             stackCount={node.stackCount}
             isFuture={node.isFuture}

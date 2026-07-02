@@ -33,14 +33,14 @@ export function calculateTotalWidth(
 
   switch (zoomLevel) {
     case 'year': {
-      // ~100px per year, 1 year ≈ 365.25 days
+      // ~150px per year
       const years = diffDays / 365.25;
-      return Math.max(1, Math.round(years * 100));
+      return Math.max(1, Math.round(years * 150));
     }
     case 'month': {
-      // ~80px per month, 1 month ≈ 30.44 days
+      // ~100px per month
       const months = diffDays / 30.44;
-      return Math.max(1, Math.round(months * 80));
+      return Math.max(1, Math.round(months * 100));
     }
     case 'day': {
       // ~40px per day

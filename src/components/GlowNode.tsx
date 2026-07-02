@@ -27,6 +27,7 @@ export default function GlowNode({ label, icon, size = 'md' }: GlowNodeProps) {
     animationDuration: '2s',
     animationTimingFunction: 'ease-in-out',
     animationIterationCount: 'infinite',
+    willChange: 'box-shadow',
     display: 'inline-flex',
     alignItems: 'center',
     gap: '0.5rem',

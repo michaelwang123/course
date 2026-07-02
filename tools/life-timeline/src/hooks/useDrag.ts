@@ -1,6 +1,5 @@
 // src/hooks/useDrag.ts
-// 拖拽交互 Hook：鼠标拖拽 + 触摸滑动，使用 requestAnimationFrame 平滑更新偏移
-// 优化：使用 document 级 mousemove 监听，防止鼠标移出容器时拖拽"卡住"
+// 拖拽交互 Hook：鼠标拖拽 + 触摸滑动 + 外部设置 offset
 
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { clampOffset } from '@/lib/position-calculator';
@@ -8,6 +7,7 @@ import { clampOffset } from '@/lib/position-calculator';
 export interface UseDragReturn {
   isDragging: boolean;
   offset: number;
+  setOffset: (value: number) => void;
   handlers: {
     onMouseDown: (e: React.MouseEvent) => void;
     onTouchStart: (e: React.TouchEvent) => void;
@@ -18,11 +18,10 @@ export interface UseDragReturn {
 
 export function useDrag(
   totalWidth: number,
-  viewportWidth: number,
-  onOffsetChange: (offset: number) => void
+  viewportWidth: number
 ): UseDragReturn {
   const [isDragging, setIsDragging] = useState(false);
-  const [offset, setOffset] = useState(0);
+  const [offset, setOffsetState] = useState(0);
 
   const isDraggingRef = useRef(false);
   const startXRef = useRef(0);
@@ -30,35 +29,33 @@ export function useDrag(
   const rafRef = useRef<number | null>(null);
   const offsetRef = useRef(0);
 
-  // Use refs for stable access in document-level listeners
   const totalWidthRef = useRef(totalWidth);
   const viewportWidthRef = useRef(viewportWidth);
-  const onOffsetChangeRef = useRef(onOffsetChange);
 
   useEffect(() => { totalWidthRef.current = totalWidth; }, [totalWidth]);
   useEffect(() => { viewportWidthRef.current = viewportWidth; }, [viewportWidth]);
-  useEffect(() => { onOffsetChangeRef.current = onOffsetChange; }, [onOffsetChange]);
+  useEffect(() => { offsetRef.current = offset; }, [offset]);
 
-  // Keep offsetRef in sync
-  useEffect(() => {
-    offsetRef.current = offset;
-  }, [offset]);
+  // Public setter for external callers (scrollToDate, adjustOffset)
+  const setOffset = useCallback((value: number) => {
+    const clamped = clampOffset(value, totalWidthRef.current, viewportWidthRef.current);
+    setOffsetState(clamped);
+    offsetRef.current = clamped;
+  }, []);
 
   const updateOffset = useCallback((newOffset: number) => {
     const clamped = clampOffset(newOffset, totalWidthRef.current, viewportWidthRef.current);
-
     if (rafRef.current !== null) {
       cancelAnimationFrame(rafRef.current);
     }
-
     rafRef.current = requestAnimationFrame(() => {
-      setOffset(clamped);
-      onOffsetChangeRef.current(clamped);
+      setOffsetState(clamped);
+      offsetRef.current = clamped;
       rafRef.current = null;
     });
   }, []);
 
-  // Mouse: start drag on container mousedown
+  // Mouse drag
   const onMouseDown = useCallback((e: React.MouseEvent) => {
     isDraggingRef.current = true;
     setIsDragging(true);
@@ -67,7 +64,6 @@ export function useDrag(
     e.preventDefault();
   }, []);
 
-  // Document-level mouse move and mouse up (added only during drag)
   useEffect(() => {
     if (!isDragging) return;
 
@@ -92,7 +88,7 @@ export function useDrag(
     };
   }, [isDragging, updateOffset]);
 
-  // Touch events (stay on container — touch capture works correctly)
+  // Touch events
   const onTouchStart = useCallback((e: React.TouchEvent) => {
     if (e.touches.length !== 1) return;
     isDraggingRef.current = true;
@@ -113,18 +109,17 @@ export function useDrag(
     setIsDragging(false);
   }, []);
 
-  // Cleanup RAF on unmount
+  // Cleanup
   useEffect(() => {
     return () => {
-      if (rafRef.current !== null) {
-        cancelAnimationFrame(rafRef.current);
-      }
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
     };
   }, []);
 
   return {
     isDragging,
     offset,
+    setOffset,
     handlers: {
       onMouseDown,
       onTouchStart,

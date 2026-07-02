@@ -34,7 +34,7 @@ export function calculateTimelineRange(events: EventNode[]): TimelineRange {
     };
   }
 
-  // 多个事件：[最早事件日期, max(当前本地日期, 最晚事件日期)]
+  // 多个事件：[最早事件日期 - 1年, max(当前本地日期, 最晚事件日期) + 1年]
   const sortedDates = events
     .map((e) => e.eventDate)
     .sort();
@@ -48,8 +48,8 @@ export function calculateTimelineRange(events: EventNode[]): TimelineRange {
   const endDate = latestDate.getTime() >= todayDate.getTime() ? latestDate : todayDate;
 
   return {
-    start: parseLocalDate(earliest),
-    end: endDate,
+    start: parseLocalDate(addYears(earliest, -1)),
+    end: new Date(endDate.getTime() + 365.25 * 24 * 60 * 60 * 1000), // +1 year
   };
 }
 

@@ -1,0 +1,76 @@
+---
+sidebar_label: 'Qdrant 向量数据库'
+title: 'Qdrant 向量数据库原理动画展示'
+slug: /ai-tech/qdrant-vector-db
+---
+
+import BrowserOnly from '@docusaurus/BrowserOnly';
+import { AnimationOrchestratorProvider } from '@site/src/hooks/useAnimationSlot';
+import EmbeddingAnimation from '@site/src/components/EmbeddingAnimation';
+import QdrantArchitecture from '@site/src/components/QdrantArchitecture';
+import SimilarityCalculator from '@site/src/components/SimilarityCalculator';
+import HNSWGraph from '@site/src/components/HNSWGraph';
+import SearchFlow from '@site/src/components/SearchFlow';
+import AppScenarios from '@site/src/components/AppScenarios';
+
+# Qdrant 向量数据库原理
+
+向量数据库是 AI 应用中至关重要的基础设施。本页面通过交互式动画展示 Qdrant 向量数据库的核心原理，帮助你直观理解向量嵌入、相似度计算、HNSW 索引和检索流程。
+
+<BrowserOnly fallback={<div style={{padding: '2rem', textAlign: 'center', color: '#00ffaa'}}>正在加载动画组件...</div>}>
+{() => {
+  return (
+    <AnimationOrchestratorProvider maxConcurrent={3}>
+      <div className="qdrant-page-grid">
+        <section className="qdrant-page-grid__full">
+          <h2>向量嵌入过程</h2>
+          <p>文本、图片和代码等不同类型的数据，经过嵌入模型（Embedding Model）处理后，会被转换为高维数值向量。语义相近的内容在向量空间中距离更近。</p>
+          <BrowserOnly fallback={<div style={{padding: '1rem', background: '#111827', borderRadius: '8px', textAlign: 'center'}}>加载向量嵌入动画...</div>}>
+            {() => <EmbeddingAnimation />}
+          </BrowserOnly>
+        </section>
+
+        <section className="qdrant-page-grid__full">
+          <h2>核心架构</h2>
+          <p>Qdrant 以 Collection（集合）为基本存储单元，每个 Collection 包含多个 Point（数据点），每个 Point 由 Vector（向量）和 Payload（元数据）组成。</p>
+          <BrowserOnly fallback={<div style={{padding: '1rem', background: '#111827', borderRadius: '8px', textAlign: 'center'}}>加载架构动画...</div>}>
+            {() => <QdrantArchitecture />}
+          </BrowserOnly>
+        </section>
+
+        <section>
+          <h2>向量相似度计算</h2>
+          <p>向量检索的核心是计算向量间的相似度。常用的度量方式包括余弦相似度（衡量方向）、欧氏距离（衡量位置）和点积（衡量投影）。</p>
+          <BrowserOnly fallback={<div style={{padding: '1rem', background: '#111827', borderRadius: '8px', textAlign: 'center'}}>加载相似度计算器...</div>}>
+            {() => <SimilarityCalculator />}
+          </BrowserOnly>
+        </section>
+
+        <section>
+          <h2>HNSW 索引结构</h2>
+          <p>HNSW（分层可导航小世界图）是 Qdrant 使用的高效近似最近邻搜索算法。它通过多层图结构实现从粗粒度到细粒度的快速导航。</p>
+          <BrowserOnly fallback={<div style={{padding: '1rem', background: '#111827', borderRadius: '8px', textAlign: 'center'}}>加载 HNSW 图动画...</div>}>
+            {() => <HNSWGraph />}
+          </BrowserOnly>
+        </section>
+
+        <section className="qdrant-page-grid__full">
+          <h2>向量检索全流程</h2>
+          <p>完整的向量检索过程包含：用户查询 → 嵌入模型转换 → 向量表示 → ANN 近似搜索 → 返回排序结果。</p>
+          <BrowserOnly fallback={<div style={{padding: '1rem', background: '#111827', borderRadius: '8px', textAlign: 'center'}}>加载检索流程动画...</div>}>
+            {() => <SearchFlow />}
+          </BrowserOnly>
+        </section>
+
+        <section className="qdrant-page-grid__full">
+          <h2>应用场景</h2>
+          <p>向量数据库在实际应用中发挥着关键作用，涵盖语义搜索、推荐系统、RAG（检索增强生成）等多种场景。</p>
+          <BrowserOnly fallback={<div style={{padding: '1rem', background: '#111827', borderRadius: '8px', textAlign: 'center'}}>加载应用场景...</div>}>
+            {() => <AppScenarios />}
+          </BrowserOnly>
+        </section>
+      </div>
+    </AnimationOrchestratorProvider>
+  );
+}}
+</BrowserOnly>

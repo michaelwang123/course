@@ -1,8 +1,7 @@
 // src/hooks/useTimeline.ts
-// 时间轴状态聚合 Hook：组合拖拽、缩放、虚拟渲染，提供统一的时间轴状态接口
-// 优化：暴露 adjustOffset 支持键盘导航滚动
+// 时间轴状态聚合 Hook：组合拖拽、缩放、虚拟渲染
 
-import { useMemo, useCallback, useState, useRef } from 'react';
+import { useMemo, useCallback, useRef } from 'react';
 import type { EventNode } from '@/types/event';
 import type { ZoomLevel, TimelineRange, PerformanceTier } from '@/types/timeline';
 import type { VisibleNode } from '@/lib/virtual-renderer';
@@ -39,53 +38,34 @@ export interface UseTimelineReturn {
   };
 }
 
-/**
- * 时间轴状态聚合 Hook
- * 组合 useDrag, useZoom, useVirtualization，提供统一的时间轴状态和操作接口
- *
- * @param events - 事件列表（已过滤后）
- * @param containerWidth - 容器宽度（px）
- */
 export function useTimeline(
   events: EventNode[],
   containerWidth: number
 ): UseTimelineReturn {
-  // Programmatic offset override (set by scrollToDate / adjustOffset)
-  const [programmaticOffset, setProgrammaticOffset] = useState<number | null>(null);
-  const programmaticOffsetRef = useRef<number | null>(null);
-
   // 计算时间轴范围
   const timelineRange: TimelineRange = useMemo(
     () => calculateTimelineRange(events),
     [events]
   );
 
-  // 缩放 Hook
+  // 缩放
   const { zoomLevel, setZoomLevel } = useZoom();
 
-  // 计算时间轴总宽度
+  // 计算时间轴总宽度 (ensure at least 2x viewport for scroll room)
   const totalWidth = useMemo(
-    () => calculateTotalWidth(timelineRange, zoomLevel),
-    [timelineRange, zoomLevel]
+    () => Math.max(calculateTotalWidth(timelineRange, zoomLevel), containerWidth * 2),
+    [timelineRange, zoomLevel, containerWidth]
   );
 
-  // 偏移量变更回调（拖拽时清除程序化偏移）
-  const handleOffsetChange = useCallback(() => {
-    if (programmaticOffsetRef.current !== null) {
-      programmaticOffsetRef.current = null;
-      setProgrammaticOffset(null);
-    }
-  }, []);
-
-  // 拖拽 Hook
-  const { isDragging, offset: dragOffset, handlers: dragHandlers } = useDrag(
+  // 拖拽 — single source of truth for offset
+  const { isDragging, offset, setOffset, handlers: dragHandlers } = useDrag(
     totalWidth,
-    containerWidth,
-    handleOffsetChange
+    containerWidth
   );
 
-  // 实际使用的偏移量：优先使用程序化偏移，否则使用拖拽偏移
-  const offset = programmaticOffset !== null ? programmaticOffset : dragOffset;
+  // Ref to track current offset for scrollToDate/adjustOffset
+  const offsetRef = useRef(offset);
+  offsetRef.current = offset;
 
   // 构建视口状态用于虚拟渲染
   const viewport = useMemo(
@@ -97,7 +77,7 @@ export function useTimeline(
     [containerWidth, offset]
   );
 
-  // 虚拟渲染 Hook
+  // 虚拟渲染
   const { visibleNodes, performanceTier } = useVirtualization(
     events,
     viewport,
@@ -107,9 +87,7 @@ export function useTimeline(
 
   // 计算可见日期范围和刻度标记
   const scaleMarks: ScaleMark[] = useMemo(() => {
-    if (containerWidth <= 0) {
-      return [];
-    }
+    if (containerWidth <= 0) return [];
 
     const visibleRange = getVisibleDateRange(
       { width: containerWidth, height: 0, offset },
@@ -126,13 +104,11 @@ export function useTimeline(
     );
   }, [containerWidth, offset, timelineRange, zoomLevel]);
 
-  // 滚动到指定日期（将该日期居中于视口）
+  // 滚动到指定日期
   const scrollToDate = useCallback(
     (dateStr: string) => {
       const targetDate = new Date(dateStr);
-      if (isNaN(targetDate.getTime())) {
-        return;
-      }
+      if (isNaN(targetDate.getTime())) return;
 
       const targetOffset = calculateScrollOffset(
         targetDate,
@@ -142,22 +118,19 @@ export function useTimeline(
       );
 
       const clamped = clampOffset(targetOffset, totalWidth, containerWidth);
-      programmaticOffsetRef.current = clamped;
-      setProgrammaticOffset(clamped);
+      setOffset(clamped);
     },
-    [timelineRange, containerWidth, zoomLevel, totalWidth]
+    [timelineRange, containerWidth, zoomLevel, totalWidth, setOffset]
   );
 
-  // 调整偏移量（用于键盘导航：ArrowLeft/Right 移动 10% 视口宽度）
+  // 调整偏移量（键盘导航）
   const adjustOffset = useCallback(
     (delta: number) => {
-      const currentOffset = programmaticOffsetRef.current ?? dragOffset;
-      const newOffset = currentOffset + delta;
+      const newOffset = offsetRef.current + delta;
       const clamped = clampOffset(newOffset, totalWidth, containerWidth);
-      programmaticOffsetRef.current = clamped;
-      setProgrammaticOffset(clamped);
+      setOffset(clamped);
     },
-    [dragOffset, totalWidth, containerWidth]
+    [totalWidth, containerWidth, setOffset]
   );
 
   return {

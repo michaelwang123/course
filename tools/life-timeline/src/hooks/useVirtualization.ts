@@ -144,7 +144,7 @@ export function useVirtualization(
       const result: VisibleNode[] = [];
       for (let i = startIdx; i <= endIdx; i++) {
         const { event, globalPos } = sortedByPosition[i];
-        const position = globalPos - offset;
+        const position = globalPos;
         const group = stacking.get(event.eventDate) || [event];
         const stackCount = group.length;
         const stackIndex = group.findIndex(e => e.id === event.id);
@@ -161,10 +161,10 @@ export function useVirtualization(
       return result;
     }
 
-    // High/medium tier: render all events (just subtract offset from cached global positions)
+    // High/medium tier: render all events (use global positions directly)
     return events.map(event => {
       const globalPos = globalPositions.get(event.id) ?? 0;
-      const position = globalPos - offset;
+      const position = globalPos;
       const group = stacking.get(event.eventDate) || [event];
       const stackCount = group.length;
       const stackIndex = group.findIndex(e => e.id === event.id);

@@ -253,6 +253,18 @@ const sidebars: SidebarsConfig = {
   ],
 
   // ========== 技术学习板块 ==========
+  aiTechSidebar: [
+    {
+      type: 'doc',
+      id: 'ai_tech/index',
+      label: 'AI 技术概览',
+    },
+    {
+      type: 'doc',
+      id: 'ai_tech/qdrant-vector-db',
+      label: 'Qdrant 向量数据库',
+    },
+  ],
   middlewareSidebar: [
     {
       type: 'doc',

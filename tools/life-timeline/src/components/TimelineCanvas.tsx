@@ -12,7 +12,6 @@ import { VerticalTrack } from './VerticalTrack';
 import { EventTooltip } from './EventTooltip';
 import { EventDetailPanel } from './EventDetailPanel';
 import { EventDetailModal } from './EventDetailModal';
-import { TimeScale } from './TimeScale';
 
 interface TimelineCanvasProps {
   events: EventNode[];
@@ -165,10 +164,6 @@ export function TimelineCanvas({
                 prefersReducedMotion={prefersReducedMotion}
                 onEventClick={handleEventSelect}
                 onEventHover={handleMarkerHover}
-              />
-              <TimeScale
-                scaleMarks={scaleMarks}
-                containerWidth={containerWidth}
               />
             </div>
           ) : (

@@ -182,7 +182,7 @@ function TimelinePageContent() {
       <Navbar user={user} onSignOut={signOut} />
 
       {/* Search + Filter area */}
-      <div className="px-4 py-3 space-y-3 border-b border-gray-800 bg-dark-800/60 backdrop-blur-sm">
+      <div className="px-6 py-4 space-y-3 border-b border-gray-800/50 bg-dark-800/40 backdrop-blur-sm">
         <div className="flex items-center gap-3 flex-wrap">
           <SearchBar
             keyword={keyword}
@@ -238,7 +238,7 @@ function TimelinePageContent() {
       </div>
 
       {/* Main content area */}
-      <main className="flex-1 min-h-0 relative">
+      <main className="flex-1 min-h-0 relative flex flex-col">
         {renderMainContent()}
       </main>
 
@@ -247,24 +247,26 @@ function TimelinePageContent() {
         <button
           type="button"
           onClick={handleOpenCreateForm}
-          className="fixed bottom-6 right-6 z-40 flex items-center justify-center
-                     w-14 h-14 bg-emerald-500 hover:bg-emerald-600 text-white
-                     rounded-full shadow-lg hover:shadow-xl transition-all
+          className="fixed bottom-8 right-8 z-40 flex items-center gap-2
+                     px-5 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white
+                     rounded-full shadow-xl shadow-emerald-900/40 hover:shadow-emerald-800/60
+                     hover:scale-105 transition-all duration-200
                      focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-dark-900
-                     animate-pulse-glow"
+                     animate-pulse-glow group"
           aria-label="添加事件"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-7 w-7"
+            className="h-5 w-5 group-hover:rotate-90 transition-transform duration-300"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            strokeWidth={2}
+            strokeWidth={2.5}
             aria-hidden="true"
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
           </svg>
+          <span className="text-sm font-medium hidden sm:inline">添加事件</span>
         </button>
       )}
 

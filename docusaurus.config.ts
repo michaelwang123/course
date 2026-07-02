@@ -80,6 +80,7 @@ const config: Config = {
           label: '技术学习',
           position: 'left',
           items: [
+            { to: '/ai-tech/', label: 'AI 技术' },
             { to: '/ragflow/', label: 'RAGFlow 教程' },
             { to: '/middleware/', label: '中间件与工具库' },
           ],
