@@ -1,5 +1,5 @@
 // src/components/FilterStatus.tsx
-// 筛选状态显示：匹配数量 + 清除筛选快捷按钮
+// 筛选状态显示：暗色主题
 
 import React from 'react';
 
@@ -21,23 +21,23 @@ export const FilterStatus: React.FC<FilterStatusProps> = ({
   }
 
   return (
-    <div className="flex items-center gap-2 text-sm text-gray-600" aria-live="polite">
+    <div className="flex items-center gap-2 text-sm text-gray-400" aria-live="polite">
       {isFiltering ? (
         <>
           <span>
-            显示 <strong className="text-gray-800">{matchedCount}</strong>/{totalCount} 个事件
+            显示 <strong className="text-emerald-300">{matchedCount}</strong>/{totalCount} 个事件
           </span>
           <button
             type="button"
             onClick={onClearAll}
-            className="text-amber-600 hover:text-amber-800 underline
-                       focus:outline-none focus:ring-2 focus:ring-amber-400 rounded"
+            className="text-emerald-400 hover:text-emerald-300 underline
+                       focus:outline-none focus:ring-2 focus:ring-emerald-400 rounded"
           >
             清除筛选
           </button>
         </>
       ) : (
-        <span>共 {totalCount} 个事件</span>
+        <span>共 <strong className="text-emerald-300">{totalCount}</strong> 个事件</span>
       )}
     </div>
   );

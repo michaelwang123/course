@@ -5,21 +5,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        warm: {
-          50: '#FFFBF0',
-          100: '#FFF3D6',
-          200: '#FFE6AD',
-          300: '#FFD685',
-          400: '#FFC45C',
-          500: '#E8A838',
-          600: '#C4862A',
-          700: '#9B6520',
-          800: '#6B4518',
-          900: '#3D2810',
+        dark: {
+          900: '#030712',
+          800: '#0a0f1a',
+          700: '#111827',
+          600: '#1f2937',
+          500: '#374151',
         },
       },
       fontFamily: {
         sans: [
+          'Inter',
           'system-ui',
           '-apple-system',
           'BlinkMacSystemFont',
@@ -30,10 +26,30 @@ export default {
           '"Microsoft YaHei"',
           'sans-serif',
         ],
+        mono: ['JetBrains Mono', 'monospace'],
       },
-      backgroundImage: {
-        'warm-gradient': 'linear-gradient(135deg, #FFFBEB 0%, #FFF7ED 50%, #FEF3C7 100%)',
-        'warm-gradient-subtle': 'linear-gradient(180deg, #FFFBF5 0%, #FFF8EE 100%)',
+      animation: {
+        'pulse-glow': 'pulse-glow 2.5s ease-in-out infinite',
+        'dash-flow': 'dash-flow 1.5s linear infinite',
+        'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
+        'shimmer': 'shimmer 3s ease-in-out infinite',
+      },
+      keyframes: {
+        'pulse-glow': {
+          '0%, 100%': { 'box-shadow': '0 0 8px rgba(52, 211, 153, 0.3), 0 0 16px rgba(52, 211, 153, 0.1)' },
+          '50%': { 'box-shadow': '0 0 16px rgba(52, 211, 153, 0.6), 0 0 32px rgba(52, 211, 153, 0.3)' },
+        },
+        'dash-flow': {
+          to: { 'stroke-dashoffset': '-20' },
+        },
+        'fade-in-up': {
+          from: { opacity: '0', transform: 'translateY(20px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+        'shimmer': {
+          '0%': { 'background-position': '-200% center' },
+          '100%': { 'background-position': '200% center' },
+        },
       },
     },
   },

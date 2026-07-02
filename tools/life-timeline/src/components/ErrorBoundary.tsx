@@ -1,5 +1,5 @@
 // src/components/ErrorBoundary.tsx
-// 错误边界：捕获子组件渲染错误，显示友好错误界面
+// 错误边界：暗色主题
 
 import { Component } from 'react';
 import type { ErrorInfo, ReactNode } from 'react';
@@ -35,18 +35,18 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   render(): ReactNode {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-50 p-4">
-          <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center">
+        <div className="min-h-screen flex items-center justify-center bg-dark-900 p-4">
+          <div className="bg-dark-800 rounded-lg shadow-2xl border border-gray-800 p-8 max-w-md w-full text-center">
             <div className="text-4xl mb-4" aria-hidden="true">😔</div>
-            <h1 className="text-xl font-semibold text-gray-900 mb-2">
+            <h1 className="text-xl font-semibold text-gray-100 mb-2">
               出了点问题
             </h1>
-            <p className="text-sm text-gray-600 mb-6">
+            <p className="text-sm text-gray-400 mb-6">
               页面遇到了意外错误，请尝试重新加载。
             </p>
             <button
               onClick={this.handleReload}
-              className="px-6 py-2.5 text-sm text-white bg-amber-500 hover:bg-amber-600 rounded-md transition-colors"
+              className="px-6 py-2.5 text-sm text-white bg-emerald-600 hover:bg-emerald-500 rounded-md transition-colors"
             >
               重新加载
             </button>

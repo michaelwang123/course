@@ -1,5 +1,5 @@
 // src/components/EmptyFilterState.tsx
-// 筛选无结果状态：提示"没有匹配的事件" + 清除筛选按钮
+// 筛选无结果状态：暗色主题
 
 import React from 'react';
 
@@ -16,7 +16,7 @@ export const EmptyFilterState: React.FC<EmptyFilterStateProps> = ({ onClearFilte
       </div>
 
       {/* Message */}
-      <p className="text-lg text-gray-600 mb-4">
+      <p className="text-lg text-gray-400 mb-4">
         没有匹配的事件
       </p>
 
@@ -25,9 +25,9 @@ export const EmptyFilterState: React.FC<EmptyFilterStateProps> = ({ onClearFilte
         type="button"
         onClick={onClearFilter}
         className="inline-flex items-center gap-1 px-4 py-2 text-sm font-medium
-                   text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200
+                   text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-700/50
                    rounded-lg transition-colors
-                   focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2"
+                   focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-dark-900"
       >
         清除筛选
       </button>

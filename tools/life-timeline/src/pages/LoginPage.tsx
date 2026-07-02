@@ -1,5 +1,5 @@
 // src/pages/LoginPage.tsx
-// 登录页面：展示 Google OAuth 登录按钮，处理认证错误
+// 登录页面：暗色主题，展示 Google OAuth 登录按钮
 
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -13,7 +13,6 @@ export function LoginPage() {
   const sessionExpired = searchParams.get('expired') === 'true';
 
   useEffect(() => {
-    // 已登录用户自动跳转到主页
     if (user && !isLoading) {
       navigate('/', { replace: true });
     }
@@ -21,21 +20,23 @@ export function LoginPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-50">
+      <div className="min-h-screen flex items-center justify-center bg-dark-900">
         <div className="text-gray-500">加载中...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-50 px-4">
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow-lg p-8 text-center">
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">人生时光线</h1>
+    <div className="min-h-screen flex items-center justify-center bg-dark-900 px-4">
+      <div className="w-full max-w-sm bg-dark-800 rounded-2xl shadow-2xl border border-gray-800 p-8 text-center">
+        <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-300 to-emerald-500 bg-clip-text text-transparent mb-2">
+          人生时光线
+        </h1>
         <p className="text-gray-500 mb-8">记录你的人生重要时刻</p>
 
         {sessionExpired && (
           <div
-            className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800"
+            className="mb-4 p-3 bg-yellow-900/20 border border-yellow-700/50 rounded-lg text-sm text-yellow-300"
             role="alert"
           >
             您的会话已过期，请重新登录
@@ -44,7 +45,7 @@ export function LoginPage() {
 
         {error && (
           <div
-            className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700"
+            className="mb-4 p-3 bg-red-900/20 border border-red-700/50 rounded-lg text-sm text-red-300"
             role="alert"
           >
             {error}
@@ -53,7 +54,7 @@ export function LoginPage() {
 
         <button
           onClick={signIn}
-          className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+          className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-dark-700 border border-gray-700 rounded-lg shadow-sm hover:bg-dark-600 hover:border-emerald-700 transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-dark-800"
           type="button"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
@@ -74,7 +75,7 @@ export function LoginPage() {
               fill="#EA4335"
             />
           </svg>
-          <span className="text-gray-700 font-medium">使用 Google 登录</span>
+          <span className="text-gray-200 font-medium">使用 Google 登录</span>
         </button>
       </div>
     </div>

@@ -45,7 +45,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
   // 加载中显示加载状态
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-50">
+      <div className="min-h-screen flex items-center justify-center bg-dark-900">
         <div className="text-gray-500">加载中...</div>
       </div>
     );

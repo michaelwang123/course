@@ -1,5 +1,5 @@
 // src/components/EventForm.tsx
-// 事件录入/编辑表单组件 — 逐字段实时验证、字段旁独立错误信息
+// 事件录入/编辑表单组件 �?逐字段实时验证、字段旁独立错误信息
 // 禁止 dangerouslySetInnerHTML，所有用户内容通过 JSX 渲染
 
 import { useState, useCallback, useMemo } from 'react';
@@ -32,7 +32,7 @@ interface FieldErrors {
   sentiment: string | null;
 }
 
-/** 已触碰/修改过的字段跟踪 */
+/** 已触�?修改过的字段跟踪 */
 interface TouchedFields {
   title: boolean;
   eventDate: boolean;
@@ -183,7 +183,7 @@ export function EventForm({
         noValidate
         aria-label={mode === 'create' ? '添加事件' : '编辑事件'}
       >
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">
+        <h2 className="text-xl font-semibold text-emerald-300 mb-4">
           {mode === 'create' ? '添加事件' : '编辑事件'}
         </h2>
 
@@ -191,9 +191,9 @@ export function EventForm({
         <div>
           <label
             htmlFor="event-title"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-gray-300 mb-1"
           >
-            事件标题 <span className="text-red-500">*</span>
+            事件标题 <span className="text-red-400">*</span>
           </label>
           <input
             id="event-title"
@@ -206,14 +206,14 @@ export function EventForm({
             aria-required="true"
             aria-invalid={touched.title && errors.title !== null}
             aria-describedby={touched.title && errors.title ? 'title-error' : undefined}
-            className={`w-full px-3 py-2 border rounded-md text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+            className={`w-full px-3 py-2 border rounded-md text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-400 bg-dark-700 text-gray-200 placeholder-gray-500 ${
               touched.title && errors.title
-                ? 'border-red-400 bg-red-50'
-                : 'border-gray-300'
+                ? 'border-red-500 bg-red-900/20'
+                : 'border-gray-700'
             }`}
           />
           {touched.title && errors.title && (
-            <p id="title-error" className="mt-1 text-xs text-red-600" role="alert">
+            <p id="title-error" className="mt-1 text-xs text-red-400" role="alert">
               {errors.title}
             </p>
           )}
@@ -223,9 +223,9 @@ export function EventForm({
         <div>
           <label
             htmlFor="event-date"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-gray-300 mb-1"
           >
-            事件日期 <span className="text-red-500">*</span>
+            事件日期 <span className="text-red-400">*</span>
           </label>
           <input
             id="event-date"
@@ -241,14 +241,14 @@ export function EventForm({
             aria-required="true"
             aria-invalid={touched.eventDate && errors.eventDate !== null}
             aria-describedby={touched.eventDate && errors.eventDate ? 'date-error' : undefined}
-            className={`w-full px-3 py-2 border rounded-md text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+            className={`w-full px-3 py-2 border rounded-md text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-400 ${
               touched.eventDate && errors.eventDate
-                ? 'border-red-400 bg-red-50'
-                : 'border-gray-300'
+                ? 'border-red-500 bg-red-900/20'
+                : 'border-gray-700'
             }`}
           />
           {touched.eventDate && errors.eventDate && (
-            <p id="date-error" className="mt-1 text-xs text-red-600" role="alert">
+            <p id="date-error" className="mt-1 text-xs text-red-400" role="alert">
               {errors.eventDate}
             </p>
           )}
@@ -258,9 +258,9 @@ export function EventForm({
         <div>
           <label
             htmlFor="event-category"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-gray-300 mb-1"
           >
-            事件分类 <span className="text-red-500">*</span>
+            事件分类 <span className="text-red-400">*</span>
           </label>
           <select
             id="event-category"
@@ -273,10 +273,10 @@ export function EventForm({
             aria-required="true"
             aria-invalid={touched.category && errors.category !== null}
             aria-describedby={touched.category && errors.category ? 'category-error' : undefined}
-            className={`w-full px-3 py-2 border rounded-md text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+            className={`w-full px-3 py-2 border rounded-md text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-400 ${
               touched.category && errors.category
-                ? 'border-red-400 bg-red-50'
-                : 'border-gray-300'
+                ? 'border-red-500 bg-red-900/20'
+                : 'border-gray-700'
             }`}
           >
             <option value="">请选择分类</option>
@@ -287,7 +287,7 @@ export function EventForm({
             ))}
           </select>
           {touched.category && errors.category && (
-            <p id="category-error" className="mt-1 text-xs text-red-600" role="alert">
+            <p id="category-error" className="mt-1 text-xs text-red-400" role="alert">
               {errors.category}
             </p>
           )}
@@ -296,8 +296,8 @@ export function EventForm({
         {/* Sentiment Field */}
         <div>
           <fieldset>
-            <legend className="block text-sm font-medium text-gray-700 mb-2">
-              情感色彩 <span className="text-red-500">*</span>
+            <legend className="block text-sm font-medium text-gray-300 mb-2">
+              情感色彩 <span className="text-red-400">*</span>
             </legend>
             <div
               className="flex gap-4"
@@ -321,7 +321,7 @@ export function EventForm({
                         setSentiment(e.target.value);
                         setTouched((prev) => ({ ...prev, sentiment: true }));
                       }}
-                      className="w-4 h-4 text-blue-500 focus:ring-blue-400"
+                      className="w-4 h-4 text-emerald-500 focus:ring-emerald-400"
                     />
                     <span>{label}</span>
                   </label>
@@ -330,7 +330,7 @@ export function EventForm({
             </div>
           </fieldset>
           {touched.sentiment && errors.sentiment && (
-            <p id="sentiment-error" className="mt-1 text-xs text-red-600" role="alert">
+            <p id="sentiment-error" className="mt-1 text-xs text-red-400" role="alert">
               {errors.sentiment}
             </p>
           )}
@@ -340,7 +340,7 @@ export function EventForm({
         <div>
           <label
             htmlFor="event-description"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-gray-300 mb-1"
           >
             事件描述
           </label>
@@ -354,15 +354,15 @@ export function EventForm({
             placeholder="描述这个时刻的细节（可选）"
             aria-invalid={touched.description && errors.description !== null}
             aria-describedby="description-count description-error"
-            className={`w-full px-3 py-2 border rounded-md text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 resize-y ${
+            className={`w-full px-3 py-2 border rounded-md text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-400 resize-y ${
               touched.description && errors.description
-                ? 'border-red-400 bg-red-50'
-                : 'border-gray-300'
+                ? 'border-red-500 bg-red-900/20'
+                : 'border-gray-700'
             }`}
           />
           <div className="flex justify-between mt-1">
             {touched.description && errors.description ? (
-              <p id="description-error" className="text-xs text-red-600" role="alert">
+              <p id="description-error" className="text-xs text-red-400" role="alert">
                 {errors.description}
               </p>
             ) : (
@@ -388,20 +388,20 @@ export function EventForm({
             type="button"
             onClick={handleCancel}
             disabled={isSubmitting}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors min-w-[44px] min-h-[44px] disabled:opacity-50"
+            className="px-4 py-2 text-sm font-medium text-gray-300 bg-dark-600 rounded-md hover:bg-dark-500 border border-gray-700 transition-colors min-w-[44px] min-h-[44px] disabled:opacity-50"
           >
             取消
           </button>
           <button
             type="submit"
             disabled={isSubmitting || hasErrors || isPristine}
-            className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 transition-colors min-w-[44px] min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            className="px-4 py-2 text-sm font-medium text-white bg-emerald-600 rounded-md hover:bg-emerald-500 transition-colors min-w-[44px] min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
             {isSubmitting && (
-              <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <span className="inline-block w-4 h-4 border-2 border-emerald-300/30 border-t-emerald-300 rounded-full animate-spin" />
             )}
             {isSubmitting
-              ? '保存中...'
+              ? '保存�?..'
               : mode === 'create'
                 ? '添加'
                 : '保存'}

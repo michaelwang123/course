@@ -1,5 +1,5 @@
 // src/components/Navbar.tsx
-// 顶部导航栏：用户头像、名称、退出按钮
+// 顶部导航栏：Grafana 风格暗色毛玻璃效果
 
 import type { User } from '@supabase/supabase-js';
 import { CATEGORY_COLORS } from '@/types/event';
@@ -9,7 +9,6 @@ interface NavbarProps {
   onSignOut: () => void;
 }
 
-/** 从分类颜色中选一个作为默认头像背景色 */
 const AVATAR_COLORS = Object.values(CATEGORY_COLORS);
 
 function getAvatarColor(name: string): string {
@@ -43,9 +42,11 @@ export function Navbar({ user, onSignOut }: NavbarProps) {
   const avatarBgColor = getAvatarColor(displayName);
 
   return (
-    <nav className="flex items-center justify-between px-4 py-3 bg-white/80 backdrop-blur-sm border-b border-gray-200 shadow-sm">
+    <nav className="flex items-center justify-between px-4 py-3 bg-dark-800/80 backdrop-blur-md border-b border-gray-800 shadow-lg">
       <div className="flex items-center gap-2">
-        <span className="text-lg font-semibold text-gray-800">人生时光线</span>
+        <span className="text-lg font-semibold bg-gradient-to-r from-emerald-300 to-emerald-500 bg-clip-text text-transparent">
+          人生时光线
+        </span>
       </div>
 
       <div className="flex items-center gap-3">
@@ -54,25 +55,25 @@ export function Navbar({ user, onSignOut }: NavbarProps) {
             <img
               src={avatarUrl}
               alt={`${displayName}的头像`}
-              className="w-8 h-8 rounded-full object-cover"
+              className="w-8 h-8 rounded-full object-cover ring-1 ring-emerald-500/30"
             />
           ) : (
             <div
-              className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium"
+              className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium ring-1 ring-emerald-500/30"
               style={{ backgroundColor: avatarBgColor }}
               aria-label={`${displayName}的头像`}
             >
               {firstChar}
             </div>
           )}
-          <span className="text-sm text-gray-700 hidden sm:inline">
+          <span className="text-sm text-gray-300 hidden sm:inline">
             {displayName}
           </span>
         </div>
 
         <button
           onClick={onSignOut}
-          className="px-3 py-1.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+          className="px-3 py-1.5 text-sm text-gray-400 hover:text-emerald-300 hover:bg-dark-600 rounded-md transition-colors border border-gray-700 hover:border-emerald-700"
           aria-label="退出登录"
         >
           退出

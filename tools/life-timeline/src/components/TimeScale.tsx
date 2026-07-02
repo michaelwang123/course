@@ -1,5 +1,5 @@
 // src/components/TimeScale.tsx
-// 时间刻度组件：年/月/日刻度标记，随缩放级别适配（完整实现见 task 8.3）
+// 时间刻度组件：暗色主题
 
 import type { ScaleMark } from '@/lib/position-calculator';
 
@@ -15,7 +15,7 @@ export function TimeScale({ scaleMarks, containerWidth }: TimeScaleProps) {
 
   return (
     <div
-      className="relative w-full h-8 border-t border-gray-200 overflow-hidden select-none"
+      className="relative w-full h-8 border-t border-gray-800 overflow-hidden select-none"
       role="presentation"
       aria-label="时间刻度"
     >
@@ -28,8 +28,8 @@ export function TimeScale({ scaleMarks, containerWidth }: TimeScaleProps) {
           {/* Tick mark */}
           <div
             className={[
-              'w-px bg-gray-300',
-              mark.type === 'major' ? 'h-3' : 'h-2',
+              'w-px',
+              mark.type === 'major' ? 'h-3 bg-emerald-600' : 'h-2 bg-gray-700',
             ].join(' ')}
           />
           {/* Label */}
@@ -37,8 +37,8 @@ export function TimeScale({ scaleMarks, containerWidth }: TimeScaleProps) {
             className={[
               'text-center whitespace-nowrap',
               mark.type === 'major'
-                ? 'text-xs font-medium text-gray-700'
-                : 'text-[10px] text-gray-400',
+                ? 'text-xs font-medium text-emerald-300'
+                : 'text-[10px] text-gray-500',
             ].join(' ')}
             style={{ transform: 'translateX(-50%)' }}
           >

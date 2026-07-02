@@ -1,5 +1,5 @@
 // src/components/SearchBar.tsx
-// 搜索输入框组件：搜索图标 + 输入框 + 清除按钮
+// 搜索输入框组件：暗色主题
 
 import React from 'react';
 
@@ -13,7 +13,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ keyword, onChange, onClear
   return (
     <div className="relative flex items-center w-full max-w-md">
       {/* Search icon */}
-      <span className="absolute left-3 text-gray-400 pointer-events-none" aria-hidden="true">
+      <span className="absolute left-3 text-gray-500 pointer-events-none" aria-hidden="true">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5"
@@ -37,9 +37,9 @@ export const SearchBar: React.FC<SearchBarProps> = ({ keyword, onChange, onClear
         onChange={(e) => onChange(e.target.value)}
         placeholder="搜索事件..."
         aria-label="搜索事件"
-        className="w-full pl-10 pr-10 py-2 text-sm border border-gray-300 rounded-lg
-                   bg-white focus:outline-none focus:ring-2 focus:ring-amber-400
-                   focus:border-amber-400 transition-colors placeholder-gray-400"
+        className="w-full pl-10 pr-10 py-2 text-sm border border-gray-700 rounded-lg
+                   bg-dark-700 text-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-400
+                   focus:border-emerald-500 transition-colors placeholder-gray-500"
       />
 
       {/* Clear button */}
@@ -48,8 +48,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({ keyword, onChange, onClear
           type="button"
           onClick={onClear}
           aria-label="清除搜索"
-          className="absolute right-3 text-gray-400 hover:text-gray-600
-                     focus:outline-none focus:ring-2 focus:ring-amber-400 rounded"
+          className="absolute right-3 text-gray-500 hover:text-emerald-400
+                     focus:outline-none focus:ring-2 focus:ring-emerald-400 rounded"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

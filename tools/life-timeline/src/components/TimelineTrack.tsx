@@ -31,10 +31,7 @@ export function TimelineTrack({
   visibleNodes,
   isDragging,
   dragHandlers,
-  totalWidth,
-  offset,
   focusedIndex,
-  prefersReducedMotion,
   onEventClick,
   onEventHover,
 }: TimelineTrackProps) {
@@ -84,14 +81,9 @@ export function TimelineTrack({
       style={{ willChange: isDragging ? 'transform' : 'auto' }}
       {...dragHandlers}
     >
-      {/* Inner container translated by offset */}
+      {/* Inner container — markers use viewport-relative positions (offset already subtracted) */}
       <div
-        className="relative h-full"
-        style={{
-          width: `${totalWidth}px`,
-          transform: `translateX(-${offset}px)`,
-          transition: prefersReducedMotion ? 'none' : undefined,
-        }}
+        className="relative h-full w-full"
       >
         {/* Connecting line/path between adjacent markers */}
         {sortedNodes.length >= 2 && (
@@ -109,14 +101,14 @@ export function TimelineTrack({
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
-              className="text-gray-300"
+              className="text-emerald-700/50"
             />
           </svg>
         )}
 
         {/* Horizontal center line spanning full track width */}
         <div
-          className="absolute top-1/2 left-0 w-full h-[2px] bg-gray-200 -translate-y-1/2"
+          className="absolute top-1/2 left-0 w-full h-[2px] bg-gray-700 -translate-y-1/2"
           aria-hidden="true"
         />
 

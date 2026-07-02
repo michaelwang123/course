@@ -1,5 +1,5 @@
 // src/components/ConfirmDialog.tsx
-// 确认对话框：模态覆盖层 + 居中对话框
+// 确认对话框：暗色主题
 
 interface ConfirmDialogProps {
   isOpen: boolean;
@@ -29,7 +29,7 @@ export function ConfirmDialog({
     >
       {/* Overlay */}
       <div
-        className="absolute inset-0 bg-black/40"
+        className="absolute inset-0 bg-black/60"
         onClick={onCancel}
         aria-hidden="true"
       />
@@ -40,17 +40,17 @@ export function ConfirmDialog({
         aria-modal="true"
         aria-labelledby="confirm-dialog-title"
         aria-describedby="confirm-dialog-message"
-        className="relative bg-white rounded-lg shadow-xl p-6 max-w-sm w-full mx-4"
+        className="relative bg-dark-800 rounded-lg shadow-2xl border border-gray-800 p-6 max-w-sm w-full mx-4"
       >
         <h2
           id="confirm-dialog-title"
-          className="text-lg font-semibold text-gray-900 mb-2"
+          className="text-lg font-semibold text-gray-100 mb-2"
         >
           {title}
         </h2>
         <p
           id="confirm-dialog-message"
-          className="text-sm text-gray-600 mb-6"
+          className="text-sm text-gray-400 mb-6"
         >
           {message}
         </p>
@@ -58,13 +58,13 @@ export function ConfirmDialog({
         <div className="flex justify-end gap-3">
           <button
             onClick={onCancel}
-            className="px-4 py-2 text-sm text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+            className="px-4 py-2 text-sm text-gray-300 bg-dark-600 hover:bg-dark-500 rounded-md transition-colors border border-gray-700"
           >
             {cancelText}
           </button>
           <button
             onClick={onConfirm}
-            className="px-4 py-2 text-sm text-white bg-red-500 hover:bg-red-600 rounded-md transition-colors"
+            className="px-4 py-2 text-sm text-white bg-red-600 hover:bg-red-500 rounded-md transition-colors"
           >
             {confirmText}
           </button>

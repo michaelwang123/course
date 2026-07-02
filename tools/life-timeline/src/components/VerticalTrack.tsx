@@ -1,5 +1,5 @@
 // src/components/VerticalTrack.tsx
-// 垂直轨道组件（移动端）：事件按时间纵向排列，可交互元素 ≥44×44px
+// 垂直轨道组件（移动端）：暗色主题
 
 import type { EventNode } from '@/types/event';
 import type { VisibleNode } from '@/lib/virtual-renderer';
@@ -17,7 +17,6 @@ export function VerticalTrack({
   focusedIndex,
   onSelectEvent,
 }: VerticalTrackProps) {
-  // Sort nodes by eventDate (oldest first, top to bottom)
   const sortedNodes = [...visibleNodes].sort((a, b) => {
     return a.event.eventDate.localeCompare(b.event.eventDate);
   });
@@ -42,7 +41,6 @@ export function VerticalTrack({
           >
             {/* Left vertical line + dot */}
             <div className="flex flex-col items-center flex-shrink-0">
-              {/* Dot/marker */}
               <div
                 className={[
                   'flex items-center justify-center',
@@ -53,16 +51,16 @@ export function VerticalTrack({
                 style={{
                   backgroundColor: categoryConfig.color,
                   borderColor: node.isFuture ? categoryConfig.color : 'transparent',
+                  boxShadow: `0 0 10px ${categoryConfig.color}50`,
                 }}
                 aria-hidden="true"
               >
                 <span className="text-lg select-none">{categoryConfig.icon}</span>
               </div>
 
-              {/* Connecting vertical line */}
               {!isLast && (
                 <div
-                  className="w-0.5 flex-1 min-h-[24px] bg-gray-300"
+                  className="w-0.5 flex-1 min-h-[24px] bg-gray-700"
                   aria-hidden="true"
                 />
               )}
@@ -74,23 +72,21 @@ export function VerticalTrack({
               className={[
                 'flex-1 text-left p-3 rounded-lg',
                 'min-h-[44px] min-w-[44px]',
-                'bg-white shadow-sm border border-gray-200',
-                'hover:shadow-md transition-shadow duration-150',
+                'bg-dark-800 border border-gray-800',
+                'hover:border-emerald-700/50 hover:shadow-lg hover:shadow-emerald-900/10 transition-all duration-150',
                 'mb-4',
-                isFocused ? 'ring-2 ring-blue-500 ring-offset-2' : '',
+                isFocused ? 'ring-2 ring-emerald-400 ring-offset-2 ring-offset-dark-900' : '',
               ].join(' ')}
               onClick={() => onSelectEvent(node.event)}
               aria-label={`${categoryLabel}事件：${node.event.title}，日期：${node.event.eventDate}${node.isFuture ? '（未来事件）' : ''}`}
             >
-              {/* Title */}
-              <h3 className="text-sm font-medium text-gray-900 truncate">
+              <h3 className="text-sm font-medium text-gray-100 truncate">
                 {node.event.title}
               </h3>
 
-              {/* Date and category */}
               <div className="flex items-center gap-2 mt-1">
                 <time
-                  className="text-xs text-gray-500"
+                  className="text-xs text-gray-500 font-mono"
                   dateTime={node.event.eventDate}
                 >
                   {node.event.eventDate}
@@ -107,9 +103,8 @@ export function VerticalTrack({
         );
       })}
 
-      {/* Empty state */}
       {sortedNodes.length === 0 && (
-        <div className="flex items-center justify-center py-12 text-gray-400 text-sm">
+        <div className="flex items-center justify-center py-12 text-gray-500 text-sm">
           暂无事件
         </div>
       )}

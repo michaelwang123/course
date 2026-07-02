@@ -177,12 +177,12 @@ function TimelinePageContent() {
   if (!user) return null;
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-br from-amber-50 to-orange-50">
+    <div className="flex flex-col h-screen bg-dark-900">
       {/* Navbar */}
       <Navbar user={user} onSignOut={signOut} />
 
       {/* Search + Filter area */}
-      <div className="px-4 py-3 space-y-3 border-b border-gray-100 bg-white/60 backdrop-blur-sm">
+      <div className="px-4 py-3 space-y-3 border-b border-gray-800 bg-dark-800/60 backdrop-blur-sm">
         <div className="flex items-center gap-3 flex-wrap">
           <SearchBar
             keyword={keyword}
@@ -193,9 +193,9 @@ function TimelinePageContent() {
           <button
             type="button"
             onClick={() => setFilterExpanded((v) => !v)}
-            className="inline-flex items-center gap-1 px-3 py-2 text-sm text-gray-600
-                       border border-gray-300 rounded-lg hover:bg-gray-50
-                       focus:outline-none focus:ring-2 focus:ring-amber-400
+            className="inline-flex items-center gap-1 px-3 py-2 text-sm text-gray-400
+                       border border-gray-700 rounded-lg hover:bg-dark-600
+                       focus:outline-none focus:ring-2 focus:ring-emerald-400
                        md:hidden"
             aria-expanded={filterExpanded}
             aria-label="展开筛选面板"
@@ -217,7 +217,7 @@ function TimelinePageContent() {
 
         {/* Filter panel — always visible on desktop, collapsible on mobile (lazy loaded) */}
         <div className={`${filterExpanded ? 'block' : 'hidden'} md:block`}>
-          <Suspense fallback={<div className="h-20 animate-pulse bg-gray-100 rounded-lg" />}>
+          <Suspense fallback={<div className="h-20 animate-pulse bg-dark-700 rounded-lg" />}>
             <FilterPanel
               categories={criteria.categories}
               sentiments={criteria.sentiments}
@@ -248,9 +248,10 @@ function TimelinePageContent() {
           type="button"
           onClick={handleOpenCreateForm}
           className="fixed bottom-6 right-6 z-40 flex items-center justify-center
-                     w-14 h-14 bg-amber-500 hover:bg-amber-600 text-white
+                     w-14 h-14 bg-emerald-500 hover:bg-emerald-600 text-white
                      rounded-full shadow-lg hover:shadow-xl transition-all
-                     focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2"
+                     focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-dark-900
+                     animate-pulse-glow"
           aria-label="添加事件"
         >
           <svg
@@ -271,12 +272,12 @@ function TimelinePageContent() {
       {formMode !== 'closed' && (
         <div className="fixed inset-0 z-50 flex justify-end">
           <div
-            className="absolute inset-0 bg-black/30"
+            className="absolute inset-0 bg-black/60"
             onClick={handleCloseForm}
             aria-hidden="true"
           />
-          <div className="relative w-full max-w-md bg-white shadow-xl overflow-y-auto">
-            <Suspense fallback={<div className="p-6 animate-pulse"><div className="h-8 bg-gray-200 rounded mb-4" /><div className="h-4 bg-gray-200 rounded mb-2" /><div className="h-4 bg-gray-200 rounded" /></div>}>
+          <div className="relative w-full max-w-md bg-dark-800 shadow-xl overflow-y-auto border-l border-gray-800">
+            <Suspense fallback={<div className="p-6 animate-pulse"><div className="h-8 bg-dark-600 rounded mb-4" /><div className="h-4 bg-dark-600 rounded mb-2" /><div className="h-4 bg-dark-600 rounded" /></div>}>
               <EventForm
                 mode={formMode === 'create' ? 'create' : 'edit'}
                 initialData={

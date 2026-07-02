@@ -1,5 +1,5 @@
 // src/components/EventMarker.tsx
-// 事件标记点组件：分类颜色+图标、堆叠数量角标、未来事件虚线边框、键盘焦点环
+// 事件标记点组件：暗色主题，带发光效果
 
 import { memo } from 'react';
 import type { EventNode } from '@/types/event';
@@ -37,10 +37,10 @@ export const EventMarker = memo(function EventMarker({
         'absolute flex items-center justify-center',
         'min-w-[44px] min-h-[44px] w-11 h-11',
         'rounded-full cursor-pointer',
-        'transition-transform duration-150',
-        'hover:scale-110',
-        isFuture ? 'border-2 border-dashed' : 'border-2 border-solid',
-        isFocused ? 'ring-2 ring-blue-500 ring-offset-2' : '',
+        'transition-all duration-200',
+        'hover:scale-110 hover:z-10',
+        isFuture ? 'border-2 border-dashed opacity-70' : 'border-2 border-solid',
+        isFocused ? 'ring-2 ring-emerald-400 ring-offset-2 ring-offset-dark-900' : '',
       ]
         .filter(Boolean)
         .join(' ')}
@@ -50,6 +50,7 @@ export const EventMarker = memo(function EventMarker({
         transform: 'translate(-50%, -50%)',
         backgroundColor: categoryConfig.color,
         borderColor: isFuture ? categoryConfig.color : 'transparent',
+        boxShadow: `0 0 12px ${categoryConfig.color}60, 0 0 4px ${categoryConfig.color}30`,
       }}
       onClick={onClick}
       onMouseEnter={() => onHover(true)}
@@ -64,7 +65,7 @@ export const EventMarker = memo(function EventMarker({
       {/* Stack count badge */}
       {isStacked && stackCount > 1 && (
         <span
-          className="absolute -top-1 -right-1 flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-gray-800 text-white text-xs font-bold"
+          className="absolute -top-1 -right-1 flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-emerald-500 text-white text-xs font-bold shadow-lg"
           aria-hidden="true"
         >
           {stackCount}

@@ -1,5 +1,5 @@
 // src/components/FilterPanel.tsx
-// 筛选面板：分类多选 + 情感多选 + 清除筛选按钮
+// 筛选面板：暗色主题，分类多选 + 情感多选
 
 import React from 'react';
 import type { EventCategory, EventSentiment } from '@/types/event';
@@ -43,10 +43,10 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
   const hasAnyFilter = categories.length > 0 || sentiments.length > 0;
 
   return (
-    <div className="flex flex-col gap-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+    <div className="flex flex-col gap-4 p-4 bg-dark-800 border border-gray-800 rounded-lg">
       {/* Category section */}
       <fieldset>
-        <legend className="text-sm font-medium text-gray-700 mb-2">分类</legend>
+        <legend className="text-sm font-medium text-gray-400 mb-2">分类</legend>
         <div className="flex flex-wrap gap-2" role="group" aria-label="事件分类筛选">
           {ALL_CATEGORIES.map((cat) => {
             const config = CATEGORIES[cat];
@@ -58,12 +58,12 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                 onClick={() => toggleCategory(cat)}
                 aria-pressed={isSelected}
                 className={`inline-flex items-center gap-1 px-3 py-1.5 text-sm rounded-full
-                           border transition-colors focus:outline-none focus:ring-2 focus:ring-amber-400
+                           border transition-all focus:outline-none focus:ring-2 focus:ring-emerald-400
                            ${isSelected
-                             ? 'border-transparent text-white'
-                             : 'border-gray-300 text-gray-700 bg-white hover:bg-gray-50'
+                             ? 'border-transparent text-white shadow-md'
+                             : 'border-gray-700 text-gray-300 bg-dark-700 hover:bg-dark-600 hover:border-gray-600'
                            }`}
-                style={isSelected ? { backgroundColor: config.color } : undefined}
+                style={isSelected ? { backgroundColor: config.color, boxShadow: `0 0 12px ${config.color}40` } : undefined}
               >
                 <span aria-hidden="true">{config.icon}</span>
                 <span>{config.label}</span>
@@ -75,7 +75,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
 
       {/* Sentiment section */}
       <fieldset>
-        <legend className="text-sm font-medium text-gray-700 mb-2">情感</legend>
+        <legend className="text-sm font-medium text-gray-400 mb-2">情感</legend>
         <div className="flex flex-wrap gap-2" role="group" aria-label="情感色彩筛选">
           {ALL_SENTIMENTS.map((sent) => {
             const isSelected = sentiments.includes(sent);
@@ -86,10 +86,10 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                 onClick={() => toggleSentiment(sent)}
                 aria-pressed={isSelected}
                 className={`inline-flex items-center px-3 py-1.5 text-sm rounded-full
-                           border transition-colors focus:outline-none focus:ring-2 focus:ring-amber-400
+                           border transition-all focus:outline-none focus:ring-2 focus:ring-emerald-400
                            ${isSelected
-                             ? 'border-amber-500 bg-amber-100 text-amber-800'
-                             : 'border-gray-300 text-gray-700 bg-white hover:bg-gray-50'
+                             ? 'border-emerald-500 bg-emerald-500/10 text-emerald-300 shadow-sm shadow-emerald-500/20'
+                             : 'border-gray-700 text-gray-300 bg-dark-700 hover:bg-dark-600 hover:border-gray-600'
                            }`}
               >
                 {SENTIMENT_LABELS[sent]}
@@ -104,8 +104,8 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
         <button
           type="button"
           onClick={onClearAll}
-          className="self-start text-sm text-amber-600 hover:text-amber-800
-                     underline focus:outline-none focus:ring-2 focus:ring-amber-400 rounded"
+          className="self-start text-sm text-emerald-400 hover:text-emerald-300
+                     underline focus:outline-none focus:ring-2 focus:ring-emerald-400 rounded"
         >
           清除筛选
         </button>

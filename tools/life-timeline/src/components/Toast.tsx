@@ -1,10 +1,10 @@
 // src/components/Toast.tsx
-// Toast 消息组件：支持单条显示（向后兼容）+ 队列容器（多条堆叠）
+// Toast 消息组件：暗色主题
 
 import { useEffect, useState, memo } from 'react';
 import type { ToastItem } from '@/hooks/useToast';
 
-// --- Single Toast (backward compatible) ---
+// --- Single Toast ---
 
 interface ToastProps {
   message: string;
@@ -14,9 +14,9 @@ interface ToastProps {
 }
 
 const TYPE_STYLES: Record<ToastProps['type'], string> = {
-  success: 'bg-green-50 border-green-300 text-green-800',
-  error: 'bg-red-50 border-red-300 text-red-800',
-  info: 'bg-blue-50 border-blue-300 text-blue-800',
+  success: 'bg-emerald-900/80 border-emerald-600 text-emerald-200',
+  error: 'bg-red-900/80 border-red-600 text-red-200',
+  info: 'bg-blue-900/80 border-blue-600 text-blue-200',
 };
 
 const TYPE_ICONS: Record<ToastProps['type'], string> = {
@@ -33,7 +33,6 @@ export function Toast({ message, type, onClose, duration = 5000 }: ToastProps) {
       setIsVisible(false);
       onClose();
     }, duration);
-
     return () => clearTimeout(timer);
   }, [duration, onClose]);
 
@@ -45,7 +44,7 @@ export function Toast({ message, type, onClose, duration = 5000 }: ToastProps) {
       aria-live="polite"
       className={`
         flex items-center gap-2 px-4 py-3
-        border rounded-lg shadow-lg max-w-sm
+        border rounded-lg shadow-xl backdrop-blur-sm max-w-sm
         motion-safe:animate-[slideIn_0.3s_ease-out]
         ${TYPE_STYLES[type]}
       `}
@@ -76,7 +75,6 @@ interface ToastContainerProps {
   duration?: number;
 }
 
-/** Single toast item within the queue, with auto-dismiss */
 const QueuedToast = memo(function QueuedToast({
   toast,
   onDismiss,
@@ -99,7 +97,7 @@ const QueuedToast = memo(function QueuedToast({
       aria-live="polite"
       className={`
         flex items-center gap-2 px-4 py-3
-        border rounded-lg shadow-lg max-w-sm w-full
+        border rounded-lg shadow-xl backdrop-blur-sm max-w-sm w-full
         motion-safe:animate-[slideIn_0.3s_ease-out]
         ${TYPE_STYLES[toast.type]}
       `}
@@ -119,9 +117,6 @@ const QueuedToast = memo(function QueuedToast({
   );
 });
 
-/**
- * Toast 队列容器：渲染多条 toast 消息，从上往下堆叠
- */
 export function ToastContainer({ toasts, onDismiss, duration = 5000 }: ToastContainerProps) {
   if (toasts.length === 0) return null;
 
